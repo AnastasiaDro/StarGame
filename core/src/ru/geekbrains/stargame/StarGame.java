@@ -1,5 +1,6 @@
 package ru.geekbrains.stargame;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,13 +13,21 @@ public class StarGame extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+
+		img = new Texture("textureSpace.jpg");
+        System.out.println(img.getHeight());
+
+        //FIXME
+		//Если приложение запускается на компьютере, то зададим размер экрана равным размеру фона
+        //размер окна не соответствует размеру картинки!!! Возможно, дело в том, что не совпадают некие Unit, или разрешение экрана разное берется
+		if (Gdx.app.getType().equals(Application.ApplicationType.Desktop)) {
+			Gdx.graphics.setWindowedMode(img.getWidth(), img.getHeight());		}
+        batch = new SpriteBatch();
 	}
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClearColor(0, 0, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		batch.draw(img, 0, 0);
