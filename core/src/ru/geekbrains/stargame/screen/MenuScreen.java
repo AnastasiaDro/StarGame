@@ -19,12 +19,13 @@ public class MenuScreen extends Base2DScreen {
     private Vector2 pos;
     //вектор скорости
     private Vector2 v;
-    //FIXME
+    //вектор, обозначающий куда указал пользователь
     private Vector2 userPushedPoint;
-    private Vector2 direction;
-    private Vector2 vNormalized;
-    Vector2 difNormalized;
+    //разница между вектором, куда указал user и начальной позицией. По умолчанию равен позиции
     private Vector2 difference;
+
+    //флаг
+    boolean help = false;
 
     @Override
     public void show() {
@@ -34,9 +35,9 @@ public class MenuScreen extends Base2DScreen {
        //инициализация векторов
         pos = new Vector2(0,0);
         v = new Vector2(2f,2f);
+        //точка, куда указал user
         userPushedPoint = new Vector2(0,0);
-        //получаем направление
-        direction = userPushedPoint.cpy().nor();
+        difference = new Vector2(pos);
     }
 
     @Override
@@ -49,13 +50,23 @@ public class MenuScreen extends Base2DScreen {
         batch.draw(img, pos.x, pos.y);
         batch.end();
 
-        //до тех пор пока разница конечной точки и точки позиции не равна нулю, мы двигаем наше изображение
-
-            //после рисования изменяем вектор позиции
-          if (Math.abs(pos.x) < Math.abs(userPushedPoint.x) || Math.abs(pos.y) < Math.abs(userPushedPoint.y)) {
+        //ноль всегда проскакивает, а единица - тоже часто (в связи с координатами изначально заданного вектора скорости 2,2)
+        //в интернете нашла примеры, где используют отличное от нуля число.
+        //если длина вектора difference между точкой нахождения объекта и указанной юзером точкой больше двух, то мы добавляем вектор скорости и задаем новое значение в difference
+        if (difference.len()>2) {
               pos.add(v);
-          }
+              difference.set(userPushedPoint.cpy().sub(pos));
 
+          } else {
+            //здесь поставила флаг, чтобы можно было выводить лог без зацикливания
+            //также позиция фигуры выравнивается под позицию, указанную юзером. Из-за частоты обновлений render-a сдвиг оказывается незаметным
+                if (help == false) {
+                    System.out.println("координаты вектора позиции = " + pos);
+                    System.out.println("Координаты UserPushedPoint = " + userPushedPoint);
+                    help = true;
+                    pos.set(userPushedPoint);
+                }
+          }
     }
 
     @Override
@@ -71,9 +82,12 @@ public class MenuScreen extends Base2DScreen {
         float pushedY = Gdx.graphics.getHeight() - screenY;
         //точка, куда нажал пользователь, задаёт конечную точку нашей картинке
         userPushedPoint.set(screenX,pushedY);
+        help = false;
+        //вектор расстояния между нажатой точкой и точкой, в которой находится наша фигура
         difference = userPushedPoint.cpy().sub(pos);
+        System.out.println(" вектор difference = " + difference);
+        System.out.println("длина difference = " + difference.len());
         v.setAngle(difference.angle());
-        System.out.println("вектор между позицией и userPushedPoint = "+difference );
         return super.touchDown(screenX, screenY, pointer, button);
 
     }
