@@ -52,7 +52,7 @@ public class MenuScreen extends Base2DScreen {
         //до тех пор пока разница конечной точки и точки позиции не равна нулю, мы двигаем наше изображение
 
             //после рисования изменяем вектор позиции
-          if (pos.x !=userPushedPoint.x || pos.y!=userPushedPoint.y) {
+          if (Math.abs(pos.x) < Math.abs(userPushedPoint.x) || Math.abs(pos.y) < Math.abs(userPushedPoint.y)) {
               pos.add(v);
           }
 
