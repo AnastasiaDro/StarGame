@@ -20,7 +20,9 @@ public class MenuScreen extends Base2DScreen {
     //вектор скорости
     private Vector2 v;
     //FIXME
-
+    private float userPushedX = 0;
+    private float userPushedY = 0;
+    private Vector2 userPushedPoint;
 
 
     @Override
@@ -30,7 +32,8 @@ public class MenuScreen extends Base2DScreen {
        img = new Texture("badlogic.jpg");
        //инициализация векторов
         pos = new Vector2(0,0);
-        v = new Vector2(0.5f,0.3f);
+        v = new Vector2(3f,3f);
+        userPushedPoint = new Vector2(0,0);
     }
 
     @Override
@@ -42,8 +45,14 @@ public class MenuScreen extends Base2DScreen {
         //а тут задаём наши вектора
         batch.draw(img, pos.x, pos.y);
         batch.end();
-        //после рисования изменяем вектор позиции
-        pos.add(v);
+
+        //до тех пор пока разница конечной точки и точки позиции не равна нулю, мы двигаем наше изображение
+
+            //после рисования изменяем вектор позиции
+          if (pos.x !=userPushedPoint.x || pos.y!=userPushedPoint.y) {
+              pos.add(v);
+          }
+
     }
 
     @Override
@@ -55,8 +64,8 @@ public class MenuScreen extends Base2DScreen {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        float userX = screenX;
-        float userY = screenY;
+        //точка, куда нажал пользователь, задаёт конечную точку нашей картинке
+        userPushedPoint.set(screenX,screenY);
         return super.touchDown(screenX, screenY, pointer, button);
 
     }
