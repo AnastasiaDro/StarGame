@@ -34,8 +34,8 @@ public class MenuScreen extends Base2DScreen {
     @Override
     public void show() {
        super.show();
-       img = new Texture("badlogic.jpg");
-       background = new Texture("textureSpace.jpg");
+       img = new Texture("duck2.png");
+       background = new Texture("space2.png");
         if (Gdx.app.getType().equals(Application.ApplicationType.Desktop)) {
             Gdx.graphics.setWindowedMode(background.getWidth(), background.getHeight());		}
         batch = new SpriteBatch();
