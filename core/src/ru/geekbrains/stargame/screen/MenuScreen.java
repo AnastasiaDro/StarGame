@@ -20,10 +20,11 @@ public class MenuScreen extends Base2DScreen {
     //вектор скорости
     private Vector2 v;
     //FIXME
-    private float userPushedX = 0;
-    private float userPushedY = 0;
     private Vector2 userPushedPoint;
-
+    private Vector2 direction;
+    private Vector2 vNormalized;
+    Vector2 difNormalized;
+    private Vector2 difference;
 
     @Override
     public void show() {
@@ -32,8 +33,10 @@ public class MenuScreen extends Base2DScreen {
        img = new Texture("badlogic.jpg");
        //инициализация векторов
         pos = new Vector2(0,0);
-        v = new Vector2(3f,3f);
+        v = new Vector2(2f,2f);
         userPushedPoint = new Vector2(0,0);
+        //получаем направление
+        direction = userPushedPoint.cpy().nor();
     }
 
     @Override
@@ -64,8 +67,13 @@ public class MenuScreen extends Base2DScreen {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        //меняем y-координату нажатия
+        float pushedY = Gdx.graphics.getHeight() - screenY;
         //точка, куда нажал пользователь, задаёт конечную точку нашей картинке
-        userPushedPoint.set(screenX,screenY);
+        userPushedPoint.set(screenX,pushedY);
+        difference = userPushedPoint.cpy().sub(pos);
+        v.setAngle(difference.angle());
+        System.out.println("вектор между позицией и userPushedPoint = "+difference );
         return super.touchDown(screenX, screenY, pointer, button);
 
     }
