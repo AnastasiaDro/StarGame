@@ -13,6 +13,9 @@ public class MenuScreen extends Base2DScreen {
 
     private SpriteBatch batch;
     private Texture img;
+    //фон
+    private Texture background;
+
 
     //чтобы объект двигался
     //вектор позиции
@@ -32,6 +35,7 @@ public class MenuScreen extends Base2DScreen {
        super.show();
        batch = new SpriteBatch();
        img = new Texture("badlogic.jpg");
+       background = new Texture("textureSpace.jpg");
        //инициализация векторов
         pos = new Vector2(0,0);
         v = new Vector2(2f,2f);
@@ -47,6 +51,7 @@ public class MenuScreen extends Base2DScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
         //а тут задаём наши вектора
+        batch.draw(background,0,0);
         batch.draw(img, pos.x, pos.y);
         batch.end();
 
@@ -89,6 +94,5 @@ public class MenuScreen extends Base2DScreen {
         System.out.println("длина difference = " + difference.len());
         v.setAngle(difference.angle());
         return super.touchDown(screenX, screenY, pointer, button);
-
     }
 }
