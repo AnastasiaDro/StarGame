@@ -1,6 +1,7 @@
 package ru.geekbrains.stargame.screen;
 
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -33,10 +34,12 @@ public class MenuScreen extends Base2DScreen {
     @Override
     public void show() {
        super.show();
-       batch = new SpriteBatch();
        img = new Texture("badlogic.jpg");
        background = new Texture("textureSpace.jpg");
-       //инициализация векторов
+        if (Gdx.app.getType().equals(Application.ApplicationType.Desktop)) {
+            Gdx.graphics.setWindowedMode(background.getWidth(), background.getHeight());		}
+        batch = new SpriteBatch();
+        //инициализация векторов
         pos = new Vector2(0,0);
         v = new Vector2(2f,2f);
         //точка, куда указал user
