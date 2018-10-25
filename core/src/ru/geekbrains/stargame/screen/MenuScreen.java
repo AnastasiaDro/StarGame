@@ -74,8 +74,8 @@ public class MenuScreen extends Base2DScreen {
         //если длина вектора difference между точкой нахождения объекта и указанной юзером точкой больше двух, то мы добавляем вектор скорости и задаем новое значение в difference
         if (difference.len()>2) {
               pos.add(v);
-              difference.set(buf.sub(pos));
-
+              //difference.set(userPushedPoint.cpy().sub(pos));
+                difference.set(buf.sub(pos));
           } else {
             //здесь поставила флаг, чтобы можно было выводить лог без зацикливания
             //также позиция фигуры выравнивается под позицию, указанную юзером. Из-за частоты обновлений render-a сдвиг оказывается незаметным
