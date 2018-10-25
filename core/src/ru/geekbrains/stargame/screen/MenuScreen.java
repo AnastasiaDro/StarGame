@@ -31,6 +31,9 @@ public class MenuScreen extends Base2DScreen {
     //флаг
     boolean help = false;
 
+    //вектор буффер
+    private Vector2 buf;
+
     @Override
     public void show() {
        super.show();
@@ -44,6 +47,9 @@ public class MenuScreen extends Base2DScreen {
         v = new Vector2(2f,2f);
         //точка, куда указал user
         userPushedPoint = new Vector2(0,0);
+        //буфферный вектор
+        buf = new Vector2();
+
         difference = new Vector2(pos);
     }
 
@@ -52,6 +58,11 @@ public class MenuScreen extends Base2DScreen {
         super.render(delta);
         Gdx.gl.glClearColor(0, 0, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        //буфферный вектор
+        buf.set(userPushedPoint);
+
+
         batch.begin();
         //а тут задаём наши вектора
         batch.draw(background,0,0);
@@ -63,7 +74,7 @@ public class MenuScreen extends Base2DScreen {
         //если длина вектора difference между точкой нахождения объекта и указанной юзером точкой больше двух, то мы добавляем вектор скорости и задаем новое значение в difference
         if (difference.len()>2) {
               pos.add(v);
-              difference.set(userPushedPoint.cpy().sub(pos));
+              difference.set(buf.sub(pos));
 
           } else {
             //здесь поставила флаг, чтобы можно было выводить лог без зацикливания
@@ -96,6 +107,6 @@ public class MenuScreen extends Base2DScreen {
         System.out.println(" вектор difference = " + difference);
         System.out.println("длина difference = " + difference.len());
         v.setAngle(difference.angle());
-        return super.touchDown(screenX, screenY, pointer, button);
+        return false;
     }
 }
