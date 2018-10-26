@@ -62,7 +62,7 @@ public class MenuScreen extends Base2DScreen {
         batch.begin();
         //а тут задаём наши вектора
        // batch.draw(background,0,0);
-        batch.draw(img, pos.x, pos.y, 0.5f, 0.5f);
+        batch.draw(img, pos.x, pos.y, 1f, 1f);
         batch.end();
 
 
