@@ -25,19 +25,22 @@ public class MenuScreen extends Base2DScreen {
     private Vector2 v;
     private Vector2 buf;
 
+    private Vector2 difference;
+
     @Override
     public void show() {
        super.show();
        img = new Texture("duck2.png");
-      // background = new Texture("space2.png");
+     // background = new Texture("space2.png");
 //        if (Gdx.app.getType().equals(Application.ApplicationType.Desktop)) {
 //            Gdx.graphics.setWindowedMode(background.getWidth(), background.getHeight());		}
 
         //инициализация векторов
         pos = new Vector2(0,0);
         touch = new Vector2();
-        v = new Vector2();
+        v = new Vector2(0.3f ,0.3f);
         buf = new Vector2();
+        difference = new Vector2(pos);
 
     }
 
@@ -47,8 +50,15 @@ public class MenuScreen extends Base2DScreen {
         Gdx.gl.glClearColor(0, 0, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         buf.set(touch);
-        if(buf.sub(pos).len()> v.len()) {
+//        if(buf.sub(pos).len()> v.len()) {
+//            pos.add(v);
+//        } else {
+//            pos.set(touch);
+//        }
+
+        if(difference.len()>0.3) {
             pos.add(v);
+            difference.set(buf.sub(pos));
         } else {
             pos.set(touch);
         }
@@ -60,9 +70,7 @@ public class MenuScreen extends Base2DScreen {
 
 
         batch.begin();
-        //а тут задаём наши вектора
-       // batch.draw(background,0,0);
-        batch.draw(img, pos.x, pos.y, 1f, 1f);
+        batch.draw(img, pos.x, pos.y, 10f, 10f);
         batch.end();
 
 
@@ -78,8 +86,9 @@ public class MenuScreen extends Base2DScreen {
     @Override
     public boolean touchDown(Vector2 touch,int pointer) {
         this.touch = touch;
-        v.set(touch.cpy().sub(pos).scl(0.01f));
-
+ //       v.set(touch.cpy().sub(pos).scl(0.01f));
+        difference = touch.cpy().sub(pos);
+        v.setAngle(difference.angle());
         return false;
     }
 }
