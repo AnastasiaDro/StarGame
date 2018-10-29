@@ -38,7 +38,7 @@ public class MenuScreen extends Base2DScreen {
         //инициализация векторов
         pos = new Vector2(0,0);
         touch = new Vector2();
-        v = new Vector2(0.3f ,0.3f);
+        v = new Vector2(0.01f ,0.01f);
         buf = new Vector2();
         difference = new Vector2(pos);
 
@@ -56,7 +56,7 @@ public class MenuScreen extends Base2DScreen {
 //            pos.set(touch);
 //        }
 
-        if(difference.len()>0.3) {
+        if(difference.len()>0.01) {
             pos.add(v);
             difference.set(buf.sub(pos));
         } else {
@@ -70,7 +70,7 @@ public class MenuScreen extends Base2DScreen {
 
 
         batch.begin();
-        batch.draw(img, pos.x, pos.y, 10f, 10f);
+        batch.draw(img, pos.x, pos.y, 0.5f, 0.5f);
         batch.end();
 
 
