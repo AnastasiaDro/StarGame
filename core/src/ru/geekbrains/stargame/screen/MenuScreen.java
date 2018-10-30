@@ -6,9 +6,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.stargame.base.Base2DScreen;
+import ru.geekbrains.stargame.base.Sprite;
 
 public class MenuScreen extends Base2DScreen {
 
@@ -27,6 +29,9 @@ public class MenuScreen extends Base2DScreen {
 
     private Vector2 difference;
 
+    private Sprite sprite;
+
+
     @Override
     public void show() {
        super.show();
@@ -41,7 +46,10 @@ public class MenuScreen extends Base2DScreen {
         v = new Vector2(0.01f ,0.01f);
         buf = new Vector2();
         difference = new Vector2(pos);
-
+        //наш спрайт
+        sprite = new Sprite(new TextureRegion(img));
+        sprite.setWidth(0.5f);
+        sprite.setHeight(0.5f);
     }
 
     @Override
@@ -70,7 +78,7 @@ public class MenuScreen extends Base2DScreen {
 
 
         batch.begin();
-        batch.draw(img, pos.x, pos.y, 0.5f, 0.5f);
+        sprite.draw(batch);
         batch.end();
 
 
