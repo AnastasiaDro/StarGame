@@ -14,6 +14,7 @@ import ru.geekbrains.stargame.base.Base2DScreen;
 import ru.geekbrains.stargame.math.Rect;
 import ru.geekbrains.stargame.sprite.Background;
 import ru.geekbrains.stargame.sprite.Star;
+import ru.geekbrains.stargame.sprite.buttons.ExitBtn;
 
 public class MenuScreen extends Base2DScreen {
     //число звёзд
@@ -25,6 +26,8 @@ public class MenuScreen extends Base2DScreen {
 
     private TextureAtlas textureAtlas;
     private Star[] stars;
+    //FIXME
+    private ExitBtn exitBtn;
 
 
     @Override
@@ -33,6 +36,10 @@ public class MenuScreen extends Base2DScreen {
         bgTexture = new Texture("space2.png"); 
         background = new Background(new TextureRegion(bgTexture));
         textureAtlas = new TextureAtlas("menuAtlas.tpack");
+        //кнопки
+        exitBtn = new ExitBtn(textureAtlas);
+
+
         stars =new Star[STAR_COUNT];
         for (int i = 0; i < stars.length; i++) {
             stars[i] = new Star(textureAtlas);
@@ -60,6 +67,8 @@ public class MenuScreen extends Base2DScreen {
         for (int i = 0; i < stars.length; i++) {
             stars[i].draw(batch);
         }
+        exitBtn.draw(batch);
+        
         batch.end();
     }
 
