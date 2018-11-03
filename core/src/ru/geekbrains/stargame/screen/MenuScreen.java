@@ -1,102 +1,86 @@
 package ru.geekbrains.stargame.screen;
 
 
-import com.badlogic.gdx.Application;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.stargame.base.Base2DScreen;
-import ru.geekbrains.stargame.base.Sprite;
+import ru.geekbrains.stargame.math.Rect;
+import ru.geekbrains.stargame.sprite.Background;
+import ru.geekbrains.stargame.sprite.Star;
 
 public class MenuScreen extends Base2DScreen {
+    //число звёзд
+    private static final int STAR_COUNT = 256;
 
 
-    private Texture img;
-    //фон
-    private Texture background;
+    private Texture bgTexture;
+    private Background background;
 
-
-    //чтобы объект двигался
-    //вектор позиции
-    private Vector2 pos;
-    private Vector2 touch;
-    private Vector2 v;
-    private Vector2 buf;
-
-    private Vector2 difference;
-
-    private Sprite sprite;
+    private TextureAtlas textureAtlas;
+    private Star[] stars;
 
 
     @Override
     public void show() {
        super.show();
-       img = new Texture("duck2.png");
-     // background = new Texture("space2.png");
-//        if (Gdx.app.getType().equals(Application.ApplicationType.Desktop)) {
-//            Gdx.graphics.setWindowedMode(background.getWidth(), background.getHeight());		}
-
-        //инициализация векторов
-        pos = new Vector2(0,0);
-        touch = new Vector2();
-        v = new Vector2(0.01f ,0.01f);
-        buf = new Vector2();
-        difference = new Vector2(pos);
-        //наш спрайт
-        sprite = new Sprite(new TextureRegion(img));
-        sprite.setWidth(0.5f);
-        sprite.setHeight(0.5f);
+        bgTexture = new Texture("space2.png"); 
+        background = new Background(new TextureRegion(bgTexture));
+        textureAtlas = new TextureAtlas("menuAtlas.tpack");
+        stars =new Star[STAR_COUNT];
+        for (int i = 0; i < stars.length; i++) {
+            stars[i] = new Star(textureAtlas);
+        }
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
-        Gdx.gl.glClearColor(0, 0, 1, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        buf.set(touch);
-//        if(buf.sub(pos).len()> v.len()) {
-//            pos.add(v);
-//        } else {
-//            pos.set(touch);
-//        }
+        update(delta);
+        draw();
+    }
 
-        if(difference.len()>0.01) {
-            pos.add(v);
-            difference.set(buf.sub(pos));
-        } else {
-            pos.set(touch);
+    public void update(float delta) {
+        for (int i = 0; i < stars.length; i++) {
+            stars[i].update(delta);
         }
+    }
 
-        //Делаем матрицу проекта единичной
-        //теперь объект рисуется в другой системе координат. Мы задаем координаты уже теперь неспосредственно
-        //в openGl-системе координат
-   //     batch.getProjectionMatrix().idt();
-
-
+    public void draw() {
+        Gdx.gl.glClearColor(0.128f, 0.53f, 0.9f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
-        sprite.draw(batch);
+        background.draw(batch);
+        for (int i = 0; i < stars.length; i++) {
+            stars[i].draw(batch);
+        }
         batch.end();
+    }
 
-
+    @Override
+    public void resize(Rect worldBounds) {
+        background.resize(worldBounds);
+        for (int i = 0; i < stars.length; i++) {
+            stars[i].resize(worldBounds);
+        }
     }
 
     @Override
     public void dispose() {
-
-        img.dispose();
+        bgTexture.dispose();
+        textureAtlas.dispose();
         super.dispose();
     }
 
     @Override
     public boolean touchDown(Vector2 touch,int pointer) {
-        this.touch = touch;
- //       v.set(touch.cpy().sub(pos).scl(0.01f));
-        difference = touch.cpy().sub(pos);
-        v.setAngle(difference.angle());
+
         return false;
     }
 }

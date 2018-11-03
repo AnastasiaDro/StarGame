@@ -66,7 +66,11 @@ public class Base2DScreen implements Screen, InputProcessor {
         batch.setProjectionMatrix(worldToGl);
         //тыкаем по экрану,поулчаем точку в пикселях и нужно спроэцироват ь в систему координат с высотой 1f и шриной плавающей
         MatrixUtils.calcTransitionMatrix(screenToWorld, screenBounds, worldBounds);
+        resize(worldBounds);
 
+    }
+
+    public void resize(Rect worldBounds) {
 
     }
 
