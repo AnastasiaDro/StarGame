@@ -9,12 +9,14 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
+import ru.geekbrains.stargame.base.ActionListener;
 import ru.geekbrains.stargame.base.Base2DScreen;
 import ru.geekbrains.stargame.math.Rect;
 import ru.geekbrains.stargame.sprite.Background;
 import ru.geekbrains.stargame.sprite.Star;
+import ru.geekbrains.stargame.sprite.buttons.ButtonExit;
 
-public class MenuScreen extends Base2DScreen {
+public class MenuScreen extends Base2DScreen implements ActionListener {
     //число звёзд
     private static final int STAR_COUNT = 256;
 
@@ -25,6 +27,7 @@ public class MenuScreen extends Base2DScreen {
     private TextureAtlas textureAtlas;
     private Star[] stars;
 
+    private ButtonExit buttonExit;
 
 
     @Override
@@ -40,7 +43,10 @@ public class MenuScreen extends Base2DScreen {
         for (int i = 0; i < stars.length; i++) {
             stars[i] = new Star(textureAtlas);
         }
+
+        buttonExit = new ButtonExit(textureAtlas, this)
     }
+
 
     @Override
     public void render(float delta) {
@@ -87,5 +93,10 @@ public class MenuScreen extends Base2DScreen {
     public boolean touchDown(Vector2 touch,int pointer) {
 
         return false;
+    }
+
+    @Override
+    public void actionPerformed(Object src) {
+
     }
 }

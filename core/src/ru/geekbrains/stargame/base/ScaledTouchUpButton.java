@@ -12,11 +12,11 @@ public class ScaledTouchUpButton extends Sprite {
     private int pointer;
     //нажата ли кнопка
     private boolean isPressed;
+    private ActionListener actionListener;
 
-    public ScaledTouchUpButton(TextureRegion region) {
+    public ScaledTouchUpButton(TextureRegion region, ActionListener actionListener) {
         super(region);
-        //при нажатии на кнопку ее размер станет 90% от исходной
-
+        this.actionListener = actionListener;
     }
 
     //методы обработки нажатий
@@ -44,7 +44,7 @@ public class ScaledTouchUpButton extends Sprite {
         }
         //отпустил ли в месте кнопки, или в другом
         if (isMe(touch)){
-            //TODO
+            actionListener.actionPerformed(this);
         }
         //сбрасываем pressed
         isPressed = false;
