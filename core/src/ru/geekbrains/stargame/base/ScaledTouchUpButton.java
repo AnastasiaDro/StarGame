@@ -17,6 +17,7 @@ public class ScaledTouchUpButton extends Sprite {
     public ScaledTouchUpButton(TextureRegion region, ActionListener actionListener) {
         super(region);
         this.actionListener = actionListener;
+        setHeightProportion(0.15f);
     }
 
     //методы обработки нажатий
