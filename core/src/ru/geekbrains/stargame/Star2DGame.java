@@ -8,6 +8,6 @@ public class Star2DGame extends Game {
     @Override
     public void create() {
         //устанавливаем экран
-        setScreen(new MenuScreen());
+        setScreen(new MenuScreen(this));
     }
 }

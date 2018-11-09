@@ -59,14 +59,18 @@ public class Base2DScreen implements Screen, InputProcessor {
 
      //   счиатем соотношение сторон
         float aspect = width/ (float) height;
-        worldBounds.setHeight(42f);
-        worldBounds.setWidth(42f*aspect);
+        worldBounds.setHeight(1f);
+        worldBounds.setWidth(1f*aspect);
         //считаем матрицу проекции
         MatrixUtils.calcTransitionMatrix(worldToGl, worldBounds, glBouns);
         batch.setProjectionMatrix(worldToGl);
         //тыкаем по экрану,поулчаем точку в пикселях и нужно спроэцироват ь в систему координат с высотой 1f и шриной плавающей
         MatrixUtils.calcTransitionMatrix(screenToWorld, screenBounds, worldBounds);
+        resize(worldBounds);
 
+    }
+
+    public void resize(Rect worldBounds) {
 
     }
 
